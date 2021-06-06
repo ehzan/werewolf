@@ -1,2 +1,2 @@
 # werewolf
-nothing yet.
+A guied to Werewolf(Mafia) game.
