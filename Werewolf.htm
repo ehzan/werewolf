@@ -38,21 +38,22 @@ td {
 	padding: 5px;
 }
 </style>
+
 <script>
 function load() {
 	var option1;
-	for (i=6; i<=20; ++i) { 
+	for (var i=6; i<=20; ++i) { 
 		option1 = document.createElement("option");
 		option1.text =i.toString(); option1.value=i;
 		NumberOfPlayers.add(option1, i);
 	}
 	NumberOfPlayers.selectedIndex=4;
 
-	for (i=0; i<CityRoles.length ; i++) {
+	for (var i=0; i<CityRoles.length ; i++) {
 		(CityRoles[i][2] ? pCity : pCity2).innerHTML+="&nbsp; <input type=checkbox id=chk_"+CityRoles[i][0]+" onChange=checkboxChange_handler(event) >"+
 				CityRoles[i][0]+" <div class=info> ⓘ <div class=tooltip>"+CityRoles[i][3]+"</div></div></br>";
 	}
-	for (i=0; i<MafiaRoles.length ; i++) {
+	for (var i=0; i<MafiaRoles.length ; i++) {
 		(MafiaRoles[i][2] ? pMafia : pMafia2).innerHTML+="&nbsp; <input type=checkbox id=chk_"+MafiaRoles[i][0]+" onChange=checkboxChange_handler(event) >"+
 				MafiaRoles[i][0]+" <div class=info> ⓘ <div class=tooltip>"+MafiaRoles[i][3]+"</div></div></br>";
 	}
@@ -79,7 +80,7 @@ function setDefaults() {
 	pTeams.innerText=Math.ceil(2*n_players/3)+" Innocents, "+Math.floor(n_players/3)+" Mafiosi";
 	document.querySelectorAll("[id^='chk_']").forEach( item => {
 		item.checked=/chk_(Detective|Doctor|Sniper|Citizen|Godfather|Mafioso)/i.test(item.id);
-		if (item.id=="chk_Armoured") item.checked=(n_players%3!=2);
+		if (item.id=="chk_Armored") item.checked=(n_players%3!=2);
 		if (item.id=="chk_Godfather") item.checked=(n_players>6);
 	});
 }
@@ -94,19 +95,21 @@ var CityRoles=[
 	["Gunner", "تفنگ‌دار", false, "..."],
 	["Thief", "دزد", false, "The Thief steals the role of another player after the opening day. The player whose role was stolen, gets the Citizen role."],
 	["Nurse", "پرستار", false, "The Nurse gains the Doctor's ability if the Doctor dies."],
+	["Stranger", "غریبه", false, "The Stranger is an Innocent player, who appears as Mafia to the Detective when investigated."],
+	["Governor", "فرماندار", false, "The Governor can reprieve those eleminated by the voting during the daytime."],
 	["Citizen", "شهروند", true, "Citizens are ordinary Innocent players. Thay can discuss and vote to eliminate players during the daytime."] ];
 
 var MafiaRoles=[
 	["Godfather", "رئیس مافیا", true, "The Godfather is the Mafia leader. They appear Innocent to the detective, and are immune to the night-time attaks."],
-	["Mafia-Doctor", "دکتر مافیا", false, "The Mafia Doctor can protect a Mafia member from any night-time attack."],
-	["Negotiator", "مذاکره کننده", false, "..."],
-	["Shaman", "جادوگر", false, "..."],
+	["MafiaDoctor", "دکتر مافیا", false, "The Mafia Doctor can protect a Mafia member from any night-time attack."],
+	["Negotiator", "مذاکره کننده", false, "مذاکره"],
+	["Shaman", "جادوگر", false, "جادوگر"],
 	["Mafioso", "مافیای ساده", true, "The Mafioso wakes up at night and silently consult their team to pick a victim to be killed."] ];
 
 function go() {
-	let n_players=NumberOfPlayers.value;
-	let n_mafias=Math.floor(n_players/3);
-	let n_citizens=n_players-n_mafias;
+	var n_players=NumberOfPlayers.value;
+	var n_mafias=Math.floor(n_players/3);
+	var n_citizens=n_players-n_mafias;
 	CityRoles.forEach(
 		item => item[2]=document.getElementById("chk_"+item[0]).checked );
 	MafiaRoles.forEach(
@@ -114,7 +117,7 @@ function go() {
 //	for (i=0 ; i<CityRoles.length ; ++i)	CityRoles[i][2]=document.getElementById("chk"+i).checked;
 //	CityRoles.forEach( (item, index) => p1.innerText+=item[0]+":"+item[2]+"\n");
 	var Players=[];
-	for (i=0, j=0, l=CityRoles.length-1; i<n_citizens ; i++, j++) {
+	for (var i=0, j=0, l=CityRoles.length-1; i<n_citizens ; i++, j++) {
 		if (j<l)
 			if (CityRoles[j][2])
 				Players.push( {role:CityRoles[j][0]+" - "+CityRoles[j][1], key:Math.random()} );
@@ -122,7 +125,7 @@ function go() {
 		else
 			Players.push( {role:CityRoles[l][0]+" - "+CityRoles[l][1], key:Math.random()} );
 	}
-	for (i=0, j=0, l=MafiaRoles.length-1; i<n_mafias ; ++i, j++)
+	for (var i=0, j=0, l=MafiaRoles.length-1; i<n_mafias ; ++i, j++)
 		if (j<l)
 			if (MafiaRoles[j][2])
 				Players.push( {role:MafiaRoles[j][0]+" - "+MafiaRoles[j][1], key:Math.random()} );
@@ -146,6 +149,29 @@ function show_hide() {
 		pMafia2.style.setProperty("display", "none");
 	}
 }
+
+function createTestSample()
+{
+	aTest.style.display="none";
+	var testSize=parseInt( prompt("Test sample size?", "1000") );
+	if (!testSize) return;
+	var content=[""];
+	for (var i=1; i<=NumberOfPlayers.value ; ++i)
+		content[0]+=i.toString()+",";
+	content[0]+="\n";
+	for (var i=1; i<=testSize ; ++i) {
+		go();
+		str=p1.innerText;
+		str=str.replace(/\r?\n|\r/g, '___');
+		str=str.replace(/\W/g, '');
+		str=str.replace(/[0-9]/g, '');
+		str=str.replace(/___/g, ',');
+		content[i]=str+"\n";
+	}
+	var file1=new File(content, "filename", {type:"text/csv; charset=UTF-8"} );
+	aTest.href=URL.createObjectURL(file1);
+	aTest.style.display="inline";
+}
 </script>
 </head>
 
@@ -154,18 +180,21 @@ function show_hide() {
 	<td>
 	Number of players:
 	<select id=NumberOfPlayers onChange="setDefaults()"></select>
-	<button onclick="go()">Go!</button><br>
+	<button id=btnGo onClick="go()">Go!</button><br>
     <i id=pTeams></i>
 	<p id=p1></p>
 	</td>
 	<td>
 	<div id=pCity><b>City Roles:</b><br></div>
 	<div id=pCity2 style="display:none;"></div><br>
-    
 	<div id=pMafia><b>Mafia Roles:</b><br></div>
 	<div id=pMafia2 style="display:none;"></div><br>
 	<a href="javascript:setDefaults();">Defaults</a>&nbsp;&nbsp;
 	<a id=link href="javascript:show_hide();">More Roles</a>
+	</td>
+	<td>
+	<button onClick="createTestSample()">Test</button>
+	<a id=aTest href="" download="Test-Sample.csv" style="display:none;">Download Test Sample</a>
 	</td>
 </tr></table>
 
