@@ -1,4 +1,33 @@
+function describeRole(role) {
+    var myjson = text2json(description_of_roles);
+    var myparsedjson = JSON.parse(myjson);
+    for (var key in myparsedjson)
+        if (myparsedjson[key][role]) return myparsedjson[key][role];
+    return null;
+}
+
+function text2json(str) {
+    str = str.replace(/(?<=^)\s/g, '');
+    str = str.replace(/\t/g, ' ');
+    str = str.replace(/ +/g, ' ');
+    str = str.replace(/( (?=\n))|((?<=\n) )/g, '');
+    str = str.replace(/\n\n+/g, '\n\n');
+    str = str.replace(/\s:/g, ':');
+    str = str.replace(/:(?=\S)/g, ': ');
+    str = str.replace(/: /g, '": "');
+    str = str.replace(/:\n/g, '": {\n');
+    str = str.replace(/\n(?=\S)/g, '\n"');
+    str = str.replace(/\n*$/g, '');
+    str = str.replace(/(?<!(\{|\n))\n/g, '"\n');
+    str = str.replace(/\n(?=.*{)/g, '},\n');
+    str = str.replace(/"(?=\n(?!}))/g, '",');
+    str = str.replace(/^/g, '{\n"');
+    str = str.replace(/$/g, '"\n}\n}');
+    return str;
+}
+
 function load() {
+
     var option1;
     for (var i = 6; i <= 20; ++i) {
         option1 = document.createElement("option");
@@ -9,11 +38,11 @@ function load() {
 
     for (var i = 0; i < CityRoles.length; i++) {
         (CityRoles[i][2] ? pCity : pCity2).innerHTML += "&nbsp; <input type=checkbox id=chk_" + CityRoles[i][0] + " onChange=checkboxChange_handler(event) >" +
-            CityRoles[i][0] + " <div class=info> ⓘ <div class=tooltip>" + CityRoles[i][3] + "</div></div></br>";
+            CityRoles[i][0] + " <div class=info> ⓘ <div class=tooltip>" + describeRole(CityRoles[i][0]) + "</div></div></br>";
     }
     for (var i = 0; i < MafiaRoles.length; i++) {
         (MafiaRoles[i][2] ? pMafia : pMafia2).innerHTML += "&nbsp; <input type=checkbox id=chk_" + MafiaRoles[i][0] + " onChange=checkboxChange_handler(event) >" +
-            MafiaRoles[i][0] + " <div class=info> ⓘ <div class=tooltip>" + MafiaRoles[i][3] + "</div></div></br>";
+            MafiaRoles[i][0] + " <div class=info> ⓘ <div class=tooltip>" + describeRole(MafiaRoles[i][0]) + "</div></div></br>";
     }
     document.getElementById("chk_" + CityRoles[CityRoles.length - 1][0]).disabled = true;
     document.getElementById("chk_" + MafiaRoles[MafiaRoles.length - 1][0]).disabled = true;
