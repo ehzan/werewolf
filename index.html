@@ -5,8 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Werewolf Roles</title>
-    <link rel="stylesheet" href="stylesheet.css">
+    <link rel=stylesheet href="stylesheet.css" type=text/css>
     <script src="scripts.js"></script>
+    <script id="data1" src="mine.js"></script>
+
+    <!-- Static -->
+    <script>
+        function foo() {
+            alert(RoleDescribe);
+            var a2 = JSON.parse(document.getElementById("data1").text);
+            alert(a2["name"]);
+        }
+    </script>
+
 </head>
 
 <body onLoad="load()">
@@ -35,6 +46,7 @@
     </table>
 
     <a id=pTest href="https://en.wikipedia.org/wiki/Mafia_(party_game)" style="text-decoration:none;">シ</a>
+    <button onClick="foo()">adfadsf</button>
 </body>
 
 </html>

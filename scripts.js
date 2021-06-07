@@ -125,7 +125,7 @@ function createTestSample() {
         str = str.replace(/___/g, ',');
         content[i] = str + "\n";
     }
-    var file1 = new File(content, "filename", { type: "text/csv; charset=UTF-8" });
+    var file1 = new File(content, "filename", { type: "text/csv;charset=UTF-8" });
     aTest.href = URL.createObjectURL(file1);
     aTest.style.display = "inline";
 }
