@@ -13,7 +13,7 @@ Sniper: The Sniper has the ability to shoot at night once (or twice) per game. I
 
 Commando: Once attacked by the Mafia at night, the Commando is given a chance to shoot. If they target a Mafia member, they stay on the game and their target dies, except for the Godfather. Whereas, if they target an Innocent, themself die from guilt. (If they target the Godfather, nobody dies.)
 
-Gunner: ...
+Gunner: The Gunner has one real and several fake guns. They may give two guns to two different players each night. They may not give themselves the real gun. The players who recieve the guns are not informed of the type of their gun.
 
 Citizen: Citizens are ordinary Innocent players. They can discuss and vote to eliminate a player during the daytime.
 
@@ -39,7 +39,7 @@ Sheriff: This is a secondary role taken in addition to the assigned role. The Sh
 
 Guardian: The Guardian can protect one (or two) players at night from being hypnotized, i.e. being unable to use their ability at that night.
 
-Undercover Cop: The Undercover Cop is a spy within the Mafia group who acts with the Mafia at nights, but wins with the Innocents.
+Undercover-Cop: The Undercover Cop is a spy within the Mafia group who acts with the Mafia at nights, but wins with the Innocents.
 
 Moral Sibling: The Sibling pair consists of one Mafia and one Innocent. If one dies, the other dies as well. The Moral Sibling is the Innocent one and commonly knows the Evil Sibling.
 
@@ -49,14 +49,22 @@ Godfather: The Godfather is the Mafia leader. They appear Innocent to the detect
 
 Mafioso: The Mafioso wakes up at night and silently consult their team to pick a victim to be killed.
 
-Mafia-Doctor: The Mafia Doctor can protect a Mafia member from any night-time attack.
+Mafia-Doctor: Each night, the Mafia Doctor can protect a Mafia member from night-time attacks.
 
-Negotiator: ...
-Shaman: ...
-Traitor: ...
-Hypnotizer, Role-blocker: ...
-Teenage-Mafia: ...
-Silencer: ...
-Evil Sibling: ...
-ناتو: ...
+Negotiator: In the case two third or less Mafia members have left in the game, The Negotiator may choose an innocent to join the Mafia, once per game. The chosen innocent will join the Mafia if and only if they may not awake any night. The Mafia may not shoot at the night they negotiate.
+
+Shaman: Each night, the Shaman may hex an Innocent, who will appear as Mafia to the Detective if investigated that night.
+
+Traitor: The Traitor does not awake at night and is not revealed as Mafia by the Detective), but works to protect them, and wins only with a Mafia victory.
+
+Hypnotizer: The Hypnotizer can stop the night actions of a chosen target. They may not hypnotize  the same player on successive nights.
+
+Callan-Mafioso: If the Callan Mafioso is eleminated by voting at the day, the Mafia may shoot twice at the upcomming night.
+
+Silencer: The Silencer may select a player at night, to be silent during the following day.
+
+Evil Sibling: The Sibling pair consists of one Mafia and one Innocent. If one dies, the other dies as well. The Evil Sibling is the Mafia one and commonly knows the Moral Sibling.
+
+Sly: The Sly may guess the role of a unique-roled Innocent at night. If they are right, their target dies even if they're protected. If they are wrong, they lose their ability. The Mafia may not shoot at the nights the Sly makes a guess.
+
 `;
