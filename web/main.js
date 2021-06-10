@@ -54,15 +54,15 @@ var CityRoles = [
     ["Thief", "دزد", false],
     ["Nurse", "پرستار", false],
     ["Stranger", "غریبه", false],
-    ["Sly", "ناتو", true],
     ["Governor", "فرماندار", false],
     ["Citizen", "شهروند", true]];
 var MafiaRoles = [
     ["Godfather", "رئیس مافیا", true],
-    ["Mafia-Doctor", "دکتر مافیا", false],
     ["Negotiator", "مذاکره کننده", false],
+    ["Sly", "ناتو", true],
+    ["Mafia-Doctor", "دکتر مافیا", false],
     ["Shaman", "جادوگر", false],
-    ["Mafioso", "مافیای ساده"]];
+    ["Mafioso", "مافیای ساده", true]];
 
 function go() {
     var n_players = NumberOfPlayers.value;
