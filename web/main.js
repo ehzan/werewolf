@@ -54,6 +54,7 @@ var CityRoles = [
     ["Thief", "دزد", false],
     ["Nurse", "پرستار", false],
     ["Stranger", "غریبه", false],
+    ["Sly", "ناتو", true],
     ["Governor", "فرماندار", false],
     ["Citizen", "شهروند", true]];
 var MafiaRoles = [
