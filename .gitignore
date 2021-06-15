@@ -16,3 +16,4 @@ python/tests/coverage_html/
 python/tests/.coverage
 python/build/
 python/tests/report/
+images
