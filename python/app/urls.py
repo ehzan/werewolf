@@ -18,4 +18,5 @@ from . import views
 
 urlpatterns = [
     path('request/role', views.say_hi),
+    path('roles', views.show_roles),
 ]
