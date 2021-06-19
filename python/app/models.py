@@ -6,8 +6,11 @@ from django.contrib.auth.models import User
 
 
 class Role(models.Model):
-    name = models.CharField(max_length=30)
-    persianName = models.CharField(max_length=25, null=True)
+    name = models.CharField(max_length=30, unique=True)
+    team = models.CharField(max_length=1, null=False,
+                            choices=[('w', 'white'), ('b', 'black')],
+                            default='w')
+    persianName = models.CharField(max_length=30, null=True)
     description = models.CharField(max_length=255, null=True)
     hidden = models.BooleanField(default=False)
     default = models.BooleanField(default=False)
