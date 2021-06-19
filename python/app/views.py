@@ -1,13 +1,10 @@
-import pathlib
 import json
-import re
-from json.encoder import JSONEncoder
-from django.http.response import HttpResponse
 from django.shortcuts import render
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from app.models import User, Role, Token
-from json import JSONEncoder  # ?
+from json.encoder import JSONEncoder
+from django.http import JsonResponse
+from django.http.response import HttpResponse
 # Create your views here.
 
 
@@ -28,39 +25,18 @@ def say_hi(request):
         JSONEncoder)
 
 
-def text2json(str):
-    str = re.sub(r'(?<=^)\s', '', str)
-    str = re.sub(r'\t', ' ', str)
-    str = re.sub(r' +', ' ', str)
-    str = re.sub(r'( (?=\n))|((?<=\n) )', '', str)
-    str = re.sub(r'\n\n+', '\n\n', str)
-    str = re.sub(r'\s:', ':', str)
-    str = re.sub(r':(?=\S)', ': ', str)
-    str = re.sub(r': ', '": "', str)
-    str = re.sub(r':\n', '": {\n', str)
-    str = re.sub(r'\n(?=\S)', '\n"', str)
-    str = re.sub(r'\n*$', '', str)
-    str = re.sub(r'(?<!(\{|\n))\n', '"\n', str)
-    str = re.sub(r'\n(?=.*{)', '},\n', str)
-    str = re.sub(r'"(?=\n(?!}))', '",', str)
-    str = re.sub(r'^', '{\n"', str)
-    str = re.sub(r'$', '"\n}\n}', str)
-    return str
-
-
 def show_roles(request):
-
-    with open(str(pathlib.Path(__file__).parent)+"/../../data/roles.txt", 'r') as f:
-        contents = f.read()
-        contents = text2json(contents)
-    myjson = json.loads(contents)
-    for team in myjson:
-        i = 0
-        print("    "+team+":")
-        for role in myjson[team]:
-            i += 1
-            if (i) > 5:
-                break
-            print("{}. {} -> {}".format(i, role, myjson[team][role]))
-
-    return JsonResponse(myjson, JSONEncoder)
+    data = {}
+    for obj in Role.objects.all():
+        item = {}
+        item[obj.name] = obj.description
+        if obj.persianName:
+            item['Persian Name'] = obj.persianName
+        item['state'] = '{}, {}, {}'.format('hidden' if obj.hidden else 'visible',
+                                            'checked' if obj.checked else 'unchecked',
+                                            'default' if obj.default else 'not default')
+        team = 'Innocent' if obj.team == 'w' else 'Mafia'
+        if team not in data:
+            data[team] = []
+        data[team].append(item)
+    return JsonResponse(data, safe=False)
