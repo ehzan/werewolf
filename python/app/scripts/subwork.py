@@ -30,19 +30,26 @@ def insert_from_file(filename):
     with open(roles_file, 'r') as f:
         contents = f.read()
     myjson = json.loads(text2json(contents))
+    n_create = n_update = 0
     for team in myjson:
         for role in myjson[team]:
-            try:
-                obj, created = Role.objects.update_or_create(
-                    name=role,
-                    defaults={
-                        'team': 'w' if team == 'City Roles' else 'b',
-                        # persianName='',
-                        'description': myjson[team][role],
-                        'hidden': False, 'checked': False, 'default': True})
-            except:
-                print("{} not created".format(role))
-    print("insert completed")
+            obj, created = Role.objects.get_or_create(
+                name=role,
+                defaults={'team': 'w' if team == 'City Roles' else 'b',
+                          'description': myjson[team][role]})
+            if not created:
+                obj.description = myjson[team][role]
+                obj.team = 'w' if team == 'City Roles' else 'b'
+                obj.save()
+                n_update += 1
+            else:
+                n_create += 1
+    print("{} roles created and {} roles updated".format(n_create, n_update))
+
+
+def delete_roles():
+    n, dict = Role.objects.all().delete()
+    print('{} roles deleted'.format(n))
 
 
 def print_roles():
@@ -59,5 +66,8 @@ def print_roles():
 def run(*args):
     if 'insert' in args:
         insert_from_file('roles.txt')
+    if 'delete' in args:
+        delete_roles()
+
     if 'print' in args:
         print_roles()

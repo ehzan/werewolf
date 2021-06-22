@@ -19,4 +19,6 @@ from . import views
 urlpatterns = [
     path('request/role', views.say_hi),
     path('roles', views.show_roles),
+    path('json/roles', views.json_roles),
+    path('register', views.register, name='register'),
 ]

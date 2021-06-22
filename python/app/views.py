@@ -25,7 +25,7 @@ def say_hi(request):
         JSONEncoder)
 
 
-def show_roles(request):
+def json_roles(request):
     data = {}
     for obj in Role.objects.all():
         item = {}
@@ -40,3 +40,12 @@ def show_roles(request):
             data[team] = []
         data[team].append(item)
     return JsonResponse(data, safe=False)
+
+
+def show_roles(request):
+    return render(request, 'roles.html', {'range': range(6, 21)})
+
+
+def register(request):
+    context = {'message': 'amghzi'}
+    return render(request, 'register.html', context)
