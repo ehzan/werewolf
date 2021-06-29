@@ -1,12 +1,15 @@
 function createTestSample() {
     aTest.style.display = "none";
-    var testSize = parseInt(prompt("Test sample size?", "1000"));
+    let n_players = NumberOfPlayers.value;
+    let testSize = parseInt(prompt("Test sample size?", "1000"));
     if (!testSize) return;
-    var content = [""];
-    for (var i = 1; i <= NumberOfPlayers.value; ++i)
+    console.log(Array(10).keys());
+
+    let content = [];
+    for (let i = 1; i <= n_players; ++i)
         content[0] += i.toString() + ",";
     content[0] += "\n";
-    for (var i = 1; i <= testSize; ++i) {
+    for (let i = 1; i <= testSize; ++i) {
         go();
         str = p1.innerText;
         str = str.replace(/\r?\n|\r/g, '___');
@@ -15,7 +18,7 @@ function createTestSample() {
         str = str.replace(/___/g, ',');
         content[i] = str + "\n";
     }
-    var file1 = new File(content, "filename", { type: "text/csv;charset=UTF-8" });
+    let file1 = new File(content, "filename", { type: "text/csv;charset=UTF-8" });
     aTest.href = URL.createObjectURL(file1);
     aTest.style.display = "inline";
 }

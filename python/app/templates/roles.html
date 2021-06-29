@@ -8,19 +8,13 @@
     <link rel="icon" href="../static/logo.png">
     <link rel=stylesheet href="../static/style.css" type=text/css>
     <script src="../static/main.js"></script>
+    <script src="../static/go.js"></script>
     <script src="../static/tooltips.js"></script>
     <script src="../static/create-test-sample.js"></script>
-    <script src="../static/data.txt"></script>
     {{role_list|json_script:"role_list"}}
-    <script>
-
-        function test() {
-            load();
-        }
-    </script>
 </head>
 
-<body onload="test()">
+<body onload="load()">
     <table>
         <tr valign=top>
             <td>

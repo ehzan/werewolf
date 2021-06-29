@@ -34,9 +34,9 @@ def json_roles(request):
         if obj.persianName:
             item['Persian Name'] = obj.persianName
         item['state'] = '{}, {}, {}'.format('hidden' if obj.hidden else 'visible',
-                                            'checked' if obj.checked else 'unchecked',
-                                            'default' if obj.default else 'not default')
-        team = 'Innocent' if obj.team == 'w' else 'Mafia'
+                                            'primary' if obj.primary else 'secondary',
+                                            'default' if obj.default else 'not default',)
+        team = 'INNOCENT' if obj.team == 'w' else 'MAFIA'
         if team not in data:
             data[team] = []
         data[team].append(item)
@@ -46,12 +46,8 @@ def json_roles(request):
 def show_roles(request):
     context = {}
     context['role_list'] = list(
-        Role.objects.filter(hidden=False).order_by('-order').values())
-    # context['mylist'] = list("111", "222")
-    # array = ['aaaaa', 'bbbbbb', 'cccccc']
+        Role.objects.filter(hidden=False).order_by('order').values())
     # injectin = '</script><script> btnGo.onclick=function () { alert("You\'re hacked"); }; //'
-    # context['dict'] = dict
-
     return render(request, 'roles.html', context)
 
 

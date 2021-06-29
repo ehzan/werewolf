@@ -10,6 +10,11 @@ admin.site.register(models.Token)
 @admin.register(models.Role)
 class RoleAdmin(admin.ModelAdmin):
     # fields = ('name', 'team', 'order')
-    list_display = ['team', 'name', 'hidden', 'default', 'checked', 'order', ]
-    list_editable = ['order', 'hidden', 'default', 'checked']
-    ordering = ['-team', 'hidden', '-default', 'order']
+    def state(self, instance):
+        return '{} ({}-{}-{})'.format('INNOCENT' if instance.team == 'w' else 'MAFIA',
+                                      'hidden' if instance.hidden else 'visible',
+                                      'primary' if instance.primary else 'secondary',
+                                      'default' if instance.default else 'not default',)
+    list_display = ['name', 'state', 'description', 'order', ]
+    list_editable = ['order', ]
+    ordering = ['-team', 'hidden', 'primary', 'order', ]
