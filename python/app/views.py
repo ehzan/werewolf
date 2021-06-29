@@ -46,7 +46,7 @@ def json_roles(request):
 def show_roles(request):
     context = {}
     context['role_list'] = list(
-        Role.objects.filter(hidden=False).order_by('order').values())
+        Role.objects.filter(hidden=False).order_by('-order').values())
     # context['mylist'] = list("111", "222")
     # array = ['aaaaa', 'bbbbbb', 'cccccc']
     # injectin = '</script><script> btnGo.onclick=function () { alert("You\'re hacked"); }; //'

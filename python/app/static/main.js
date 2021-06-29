@@ -45,13 +45,13 @@ function load() {
 
 function checkboxChange_handler(e) {
     switch (e.target.id) {
-        case "chk_Armored": chk_Bulletproof.checked &&= !e.target.checked;
+        case "fck_Armored": fck_Bulletproof.checked &&= !e.target.checked;
             break;
-        case "chk_Bulletproof": chk_Armored.checked &&= !e.target.checked;
+        case "fck_Bulletproof": fck_Armored.checked &&= !e.target.checked;
             break;
-        case "chk_Sniper": chk_Commando.checked &&= !e.target.checked;
+        case "fck_Sniper": fck_Commando.checked &&= !e.target.checked;
             break;
-        case "chk_Commando": chk_Sniper.checked &&= !e.target.checked;
+        case "fck_Commando": fck_Sniper.checked &&= !e.target.checked;
             break;
     }
 }

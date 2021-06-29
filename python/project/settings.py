@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'app',
+    'sort_order_field'
 ]
 
 MIDDLEWARE = [
