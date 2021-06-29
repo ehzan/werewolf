@@ -5,6 +5,7 @@ from app.models import User, Role, Token
 from json.encoder import JSONEncoder
 from django.http import JsonResponse
 from django.http.response import HttpResponse
+from django.db.models import Q
 # Create your views here.
 
 
@@ -43,7 +44,15 @@ def json_roles(request):
 
 
 def show_roles(request):
-    return render(request, 'roles.html', {'range': range(6, 21)})
+    context = {}
+    context['role_list'] = list(
+        Role.objects.filter(hidden=False).order_by('order').values())
+    # context['mylist'] = list("111", "222")
+    # array = ['aaaaa', 'bbbbbb', 'cccccc']
+    # injectin = '</script><script> btnGo.onclick=function () { alert("You\'re hacked"); }; //'
+    # context['dict'] = dict
+
+    return render(request, 'roles.html', context)
 
 
 def register(request):

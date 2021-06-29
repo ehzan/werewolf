@@ -68,6 +68,5 @@ def run(*args):
         insert_from_file('roles.txt')
     if 'delete' in args:
         delete_roles()
-
     if 'print' in args:
         print_roles()

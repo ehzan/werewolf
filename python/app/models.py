@@ -6,12 +6,16 @@ from django.contrib.auth.models import User
 
 
 class Role(models.Model):
+    class meta:
+        ordering = ['order', ]
+
     name = models.CharField(max_length=30, unique=True)
     team = models.CharField(max_length=1, null=False,
                             choices=[('w', 'white'), ('b', 'black')],
                             default='w')
     persianName = models.CharField(max_length=30, null=True)
     description = models.CharField(max_length=255, null=True)
+    order = models.IntegerField(default=0)
     hidden = models.BooleanField(default=False)
     default = models.BooleanField(default=False)
     checked = models.BooleanField(default=False)

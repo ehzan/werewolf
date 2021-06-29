@@ -11,34 +11,41 @@
     <script src="../static/tooltips.js"></script>
     <script src="../static/create-test-sample.js"></script>
     <script src="../static/data.txt"></script>
+    {{role_list|json_script:"role_list"}}
+    <script>
+
+        function test() {
+            load();
+        }
+    </script>
 </head>
 
-<body onLoad="load()">
+<body onload="test()">
     <table>
         <tr valign=top>
             <td>
                 Number of players:
-                <select id=NumberOfPlayers onChange="setDefaults()">
+                <select id=NumberOfPlayers onchange="setDefaults()">
                     <script>
                         for (var i = 6; i <= 20; ++i)
                             document.writeln("<option value=" + i + ">" + i + "</option>")
                         NumberOfPlayers.selectedIndex = 4;
                     </script>
                 </select>
-                <button id=btnGo onClick="go()">Go!</button><br>
+                <button id=btnGo onclick="go()">Go!</button><br>
                 <i id=pTeams></i>
                 <p id=p1></p>
             </td>
             <td>
-                <div id=pCity><b>City Roles:</b><br></div>
-                <div id=pCity2 style="display:none;"></div><br>
-                <div id=pMafia><b>Mafia Roles:</b><br></div>
-                <div id=pMafia2 style="display:none;"></div><br>
+                <div id=pCity><b>City Roles:</b><br> </div>
+                <div id=pCity2 style="display:none;"> </div><br>
+                <div id=pMafia><b>Mafia Roles:</b><br> </div>
+                <div id=pMafia2 style="display:none;"> </div><br>
                 <a href="javascript:setDefaults();">Defaults</a>&nbsp;&nbsp;
                 <a id=link href="javascript:show_hide_roles();">More Roles</a>
             </td>
             <td>
-                <button onClick="createTestSample()">Test</button>
+                <button onclick="createTestSample()">Test</button>
                 <a id=aTest href="" download="Test-Sample.csv" style="display:none;">Download Test Sample</a>
             </td>
         </tr>
