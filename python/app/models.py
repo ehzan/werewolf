@@ -1,6 +1,7 @@
 from django import contrib
 from django.db import models
 from django.contrib.auth.models import User
+
 # from django.contrib import admin
 
 # Create your models here.
@@ -30,3 +31,8 @@ class Token(models.Model):
 
     def __str__(self) -> str:
         return '{}_token'.format(self.user)
+
+
+class Game(models.Model):
+    id = models.BigIntegerField("id of the game", primary_key=True)
+    players = models.CharField("lis of roles", max_length=500)

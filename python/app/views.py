@@ -1,11 +1,11 @@
 import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from app.models import User, Role, Token
+from app.models import User, Role, Token, Game
 from json.encoder import JSONEncoder
 from django.http import JsonResponse
 from django.http.response import HttpResponse
-from django.db.models import Q
+from django.db.models import Q, Max
 # Create your views here.
 
 
@@ -24,6 +24,14 @@ def say_hi(request):
     return JsonResponse(
         {'status': '{} fetched'.format(this_role)},
         JSONEncoder)
+
+
+def insert_game(request):
+    maxid = Game.objects.aggregate(Max('id'))['id__max']
+    game_players = request.GET['Players']
+    print('game {} -> {}'.format(maxid+1, game_players))
+    Game.objects.create(id=maxid+1, players=game_players)
+    return HttpResponse('game {} -> {}'.format(maxid+1, game_players))
 
 
 def json_roles(request):
