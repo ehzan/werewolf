@@ -28,9 +28,11 @@ def say_hi(request):
 
 def insert_game(request):
     maxid = Game.objects.aggregate(Max('id'))['id__max']
+    if maxid is None:
+        maxid = 0
     game_players = request.GET['Players']
-    print('game {} -> {}'.format(maxid+1, game_players))
     Game.objects.create(id=maxid+1, players=game_players)
+    print('game {} -> {}'.format(maxid+1, game_players))
     return HttpResponse('game {} -> {}'.format(maxid+1, game_players))
 
 
