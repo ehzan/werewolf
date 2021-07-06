@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from app.models import User, Role, Token, Game
+from app import models
 from json.encoder import JSONEncoder
 from django.http import JsonResponse
 from django.http.response import HttpResponse
@@ -26,19 +26,39 @@ def say_hi(request):
         JSONEncoder)
 
 
-def insert_game(request):
-    maxid = Game.objects.aggregate(Max('id'))['id__max']
-    if maxid is None:
-        maxid = 0
-    game_players = request.GET['Players']
-    Game.objects.create(id=maxid+1, players=game_players)
-    print('game {} -> {}'.format(maxid+1, game_players))
-    return HttpResponse('game {} -> {}'.format(maxid+1, game_players))
+def sortbykey(item):
+    return item['key']
+
+
+@csrf_exempt
+def create_game(request):
+    myjson = json.loads(request.body) if request.method == 'POST' else (
+        json.loads(request.GET['Players']) if request.method == 'GET' else None)
+    if myjson:
+        myjson.sort(key=lambda item: item['key'])
+        # verbose = ', '.join(map(lambda item: item['role'], myjson))
+        verbose = ', '.join(item['role'] for item in myjson)
+        maxid = models.Game.objects.aggregate(Max('id'))['id__max']
+        theGame = models.Game.objects.create(
+            id=maxid+1 if maxid else 1, verbose=verbose, active=True)
+        index = 0
+        for item in myjson:
+            try:
+                role = models.Role.objects.get(name=item['role'])
+            except models.Role.DoesNotExist:
+                role = models.Role.objects.get(name='Unknown')
+            finally:
+                index += 1
+                models.Player.objects.create(
+                    number=index, game_id=theGame, role_id=role, state='alive')
+        return HttpResponse('Game #{} started.'.format(theGame.id))
+    else:
+        return HttpResponse('Not valid!')
 
 
 def json_roles(request):
     data = {}
-    for obj in Role.objects.all():
+    for obj in models.Role.objects.all():
         item = {}
         item[obj.name] = obj.description
         if obj.persianName:
@@ -56,7 +76,7 @@ def json_roles(request):
 def show_roles(request):
     context = {}
     context['role_list'] = list(
-        Role.objects.filter(hidden=False).order_by('order').values())
+        models.Role.objects.filter(hidden=False).order_by('order').values())
     # injectin = '</script><script> btnGo.onclick=function () { alert("You\'re hacked"); }; //'
     return render(request, 'roles.html', context)
 

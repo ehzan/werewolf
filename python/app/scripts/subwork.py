@@ -56,11 +56,11 @@ def print_roles():
     print(Role.objects.all())
     print('====================')
     for obj in Role.objects.all():
-        print("{}: {}...     {} {} {} {}".format(
+        print("{}: {}...  {} {} {} {}".format(
             obj.name, obj.description[:50], obj.persianName,
-            ("checked," if obj.checked else "uncheched,"),
-            ("hidden," if obj.hidden else "display,"),
-            ("default," if obj.default else "")))
+            'hidden' if obj.hidden else 'visible',
+            'primary' if obj.primary else 'secondary',
+            'default' if obj.default else 'not default'))
 
 
 def run(*args):

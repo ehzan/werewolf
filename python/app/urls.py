@@ -20,6 +20,6 @@ urlpatterns = [
     # path('request/role', views.say_hi),
     path('werewolf/', views.show_roles),
     path('json/roles/', views.json_roles),
-    path('game/insert/', views.insert_game),
+    path('game/', views.create_game),
     # path('register', views.register, name='register'),
 ]

@@ -5,6 +5,7 @@ from . import models
 
 admin.site.register(models.Token)
 admin.site.register(models.Game)
+admin.site.register(models.Player)
 # admin.site.register(models.Role)
 
 
@@ -16,6 +17,7 @@ class RoleAdmin(admin.ModelAdmin):
                                       'hidden' if instance.hidden else 'visible',
                                       'primary' if instance.primary else 'secondary',
                                       'default' if instance.default else 'not default',)
-    list_display = ['name', 'state', 'description', 'order', ]
+    list_display = ['name', 'state', 'id',
+                    'order', 'description', 'persianName', 'primary']
     list_editable = ['order', ]
-    ordering = ['-team', 'hidden', 'primary', 'order', ]
+    ordering = ['-team', 'hidden', '-primary', 'order', ]
