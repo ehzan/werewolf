@@ -49,32 +49,6 @@ def AJAX(request):
     return HttpResponse(str(data).replace('\'', '\"'))
 
 
-@csrf_exempt
-def create_game(request):
-    jsonList = json.loads(request.body) if request.method == 'POST' else (
-        json.loads(request.GET['selected_roles']) if request.method == 'GET' else None)
-    if jsonList:
-        jsonList.sort(key=lambda item: item['key'])
-        # verbose = ', '.join(map(lambda item: item['role'], jsonList))
-        verbose = ', '.join(item['role'] for item in jsonList)
-        maxid = models.Game.objects.aggregate(Max('id'))['id__max']
-        theGame = models.Game.objects.create(
-            id=maxid+1 if maxid else 1, verbose=verbose, active=True)
-        index = 0
-        for item in jsonList:
-            try:
-                role = models.Role.objects.get(name=item['role'])
-            except models.Role.DoesNotExist:
-                role = models.Role.objects.get(name='Unknown')
-            finally:
-                index += 1
-                models.Player.objects.create(
-                    number=index, game_id=theGame, role_id=role, state='alive')
-        return HttpResponse('Game #{} started.'.format(theGame.id))
-    else:
-        return HttpResponse('Not valid!')
-
-
 def json_roles(request):
     data = {}
     for obj in models.Role.objects.all():

@@ -1,7 +1,6 @@
 from django import contrib
 from django.db import models
 from django.contrib.auth.models import User
-
 # from django.contrib import admin
 
 # Create your models here.
@@ -31,23 +30,3 @@ class Token(models.Model):
 
     def __str__(self) -> str:
         return '{}_token'.format(self.user)
-
-
-class Game(models.Model):
-    id = models.BigIntegerField("id of the game", primary_key=True)
-    verbose = models.CharField("list of roles", max_length=500)
-    active = models.BooleanField(default=False)
-
-    def __str__(self):
-        return 'Game#{}: {}'.format(self.id, 'active' if self.active else 'finished')
-
-
-class Player(models.Model):
-    number = models.IntegerField(default=1)
-    game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
-    state = models.CharField(max_length=5, default='alive',
-                             choices=[('alive', 'alive'), ('dead', 'dead')])
-
-    def __str__(self):
-        return '{}. {} ({})'.format(self.number, self.role_id, self.game_id)
