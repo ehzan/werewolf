@@ -6,13 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RESTful</title>
     <script>
-        function f1() {
-            p1.innerHTML = "<h3>hi</h3>";
-            // alert(location);
-        }
         function ajax_response_handler() {
             p1.innerHTML = "AJAX <ol>";
-            console.log('ajax response');
+            console.log("ajax response");
             console.log(JSON.parse(this.responseText));
             for (let key in JSON.parse(this.responseText))
                 p1.innerHTML += `<li>${key}: ${JSON.parse(this.responseText)[key]}</li>`;
@@ -21,13 +17,13 @@
         function do_ajax() {
             const xhr = new XMLHttpRequest();
             xhr.onload = ajax_response_handler;
-            let url = location.origin + "/ajax/";
-            if (form1.method == 'get') {
+            let url = location.origin + "/AJAX/";
+            if (form1.method == "get") {
                 const itr = new FormData(form1);
                 const d1 = [...itr.entries()];
                 const d2 = d1.map(item =>
                     `${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`);
-                const requestStr = d2.join('&');
+                const requestStr = d2.join("&");
                 url += "?" + requestStr;
                 console.log(url);
             }
@@ -50,9 +46,9 @@
         <input type="button" name=btnAjax value="Ajax" onclick="do_ajax()"> <br>
         <input type="text" name=username value="ehzan" placeholder="enter username"> <br>
         <input type="password" name=password value="mypass" placeholder="enter password"> <br>
-        <input type="radio" name=time value='21' checked>9:00 PM
-        <input type="radio" name=time value='22'>10:00 PM<br>
-        <input type="checkbox" name=agree checked>I agree. <br>
+        <input type="radio" name=time value="21" checked>9:00 PM
+        <input type="radio" name=time value="22">10:00 PM<br>
+        <input type="checkbox" name=disclaimer checked>I agree with everything. <br>
     </form>
     <p>
     <table border=1 width=500 style="table-layout: fixed;">

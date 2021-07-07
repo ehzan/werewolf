@@ -22,6 +22,6 @@ urlpatterns = [
     path('json/roles/', views.json_roles),
     path('game/', views.create_game),
     path('REST/', views.REST),
-    path('AJAX/', views.ajax),
+    path('AJAX/', views.AJAX),
     # path('register', views.register, name='register'),
 ]

@@ -50,4 +50,4 @@ class Player(models.Model):
                              choices=[('alive', 'alive'), ('dead', 'dead')])
 
     def __str__(self):
-        return '{}. {} (Game{})'.format(self.number, self.role_id, self.game_id)
+        return '{}. {} ({})'.format(self.number, self.role_id, self.game_id)

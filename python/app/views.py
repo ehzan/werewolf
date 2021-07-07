@@ -26,7 +26,6 @@ def say_hi(request):
 
 # @csrf_exempt
 def REST(request):
-    print('*******************')
     requestData = request.POST if request.method == 'POST' else(
         request.GET if request.method == 'GET' else None)
     responseData = {}
@@ -38,8 +37,7 @@ def REST(request):
 
 
 @csrf_exempt
-def ajax(request):
-    print('AAAAAAAAAAAA')
+def AJAX(request):
     requestData = request.POST if request.method == 'POST' else(
         request.GET if request.method == 'GET' else None)
     data = {}
@@ -48,7 +46,6 @@ def ajax(request):
     for key in requestData:
         data[key] = requestData[key]
 
-    print(str(data))
     return HttpResponse(str(data).replace('\'', '\"'))
 
 
@@ -57,14 +54,6 @@ def create_game(request):
     jsonList = json.loads(request.body) if request.method == 'POST' else (
         json.loads(request.GET['selected_roles']) if request.method == 'GET' else None)
     if jsonList:
-        print(request.method)
-        print(type(jsonList))
-        print('=============')
-        print(jsonList)
-        print('=============')
-        print(str(jsonList).replace('\'', '\"'))
-        print('=============')
-
         jsonList.sort(key=lambda item: item['key'])
         # verbose = ', '.join(map(lambda item: item['role'], jsonList))
         verbose = ', '.join(item['role'] for item in jsonList)
