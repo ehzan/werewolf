@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mafia Roles</title>
+    <link rel="icon" href="./logo.png">
+    <link rel=stylesheet href="./stylesheet.css" type=text/css>
+    <script src="./main.js"></script>
+    <script src="./tooltips.js"></script>
+    <script src="./create-test-sample.js"></script>
+    <script src="./data.txt"></script>
+</head>
+
+<body onLoad="load();">
+    <table>
+        <tr valign=top>
+            <td>
+                Number of players:
+                <select id=NumberOfPlayers onChange="setDefaults()"></select>
+                <button id=btnGo onClick="go()">Go!</button><br>
+                <i id=pTeams></i>
+                <p id=p1></p>
+            </td>
+            <td>
+                <div id=pCity><b>City Roles:</b><br></div>
+                <div id=pCity2 style="display:none;"></div><br>
+                <div id=pMafia><b>Mafia Roles:</b><br></div>
+                <div id=pMafia2 style="display:none;"></div><br>
+                <a href="javascript:setDefaults();">Defaults</a>&nbsp;&nbsp;
+                <a id=link href="javascript:show_hide_roles();">More Roles</a>
+            </td>
+            <td>
+                <button onClick="createTestSample()">Test</button>
+                <a id=aTest href="" download="Test-Sample.csv" style="display:none;">Download Test Sample</a>
+            </td>
+        </tr>
+    </table>
+
+    <a id=pTest href="https://en.wikipedia.org/wiki/Mafia_(party_game)" style="text-decoration:none;">シ</a>
+</body>
+
+</html>
