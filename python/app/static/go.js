@@ -3,13 +3,17 @@ function go(event) {
     selected_roles.sort((a, b) => a.key - b.key);
 
     if (event.target.id == 'btnGo') {
-        const xhttp = new XMLHttpRequest();
-        const url = location.origin + '/game/'      //GET: /?selected_roles=${selected_roles.map(item => item.role)}`
-        xhttp.open('POST', url);
-        xhttp.setRequestHeader('Content-Type', 'application/json'); //application/x-www-form-urlencoded
-        xhttp.send(JSON.stringify(selected_roles));        //GET: xhttp.send(`selected_roles=${selected_roles.map(item => item.role)}`);
+        let xhttp = new XMLHttpRequest();
+
+        const url = location.origin + '/game/?selected_roles=' + JSON.stringify(selected_roles)
+        xhttp.open('GET', url, true);
+        xhttp.send();
+        //TODO: POST request
+        // xhttp.open('POST', location.origin + '/game/', true);
+        // xhttp.setRequestHeader('Content-Type', 'application/json'); //application/x-www-form-urlencoded
+        // xhttp.send(JSON.stringify(selected_roles));
     }
-    p1.innerText = "";
+    p1.innerText = '';
     selected_roles.forEach((item, index) =>
         p1.innerText += `${(index + 1)}. ${item.role} - ${role_map.get(item.role).persianName}\n`);
 }
