@@ -4,14 +4,12 @@ function go(event) {
 
     if (event.target.id == 'btnGo') {
         let xhttp = new XMLHttpRequest();
-
-        const url = location.origin + '/game/?selected_roles=' + JSON.stringify(selected_roles)
-        xhttp.open('GET', url, true);
-        xhttp.send();
-        //TODO: POST request
-        // xhttp.open('POST', location.origin + '/game/', true);
-        // xhttp.setRequestHeader('Content-Type', 'application/json'); //application/x-www-form-urlencoded
-        // xhttp.send(JSON.stringify(selected_roles));
+        // const url = location.origin + '/game/?selected_roles=' + JSON.stringify(selected_roles)
+        // xhttp.open('GET', url, true);
+        // xhttp.send();
+        xhttp.open('POST', location.origin + '/game/', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json'); //application/x-www-form-urlencoded
+        xhttp.send(JSON.stringify(selected_roles));
     }
     p1.innerText = '';
     selected_roles.forEach((item, index) =>
